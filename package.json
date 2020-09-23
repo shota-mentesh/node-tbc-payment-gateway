@@ -15,5 +15,9 @@
     "tbc",
     "ufc",
     "payments"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shota-mentesh/node-tbc-payment-gateway"
+  }
 }
