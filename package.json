@@ -1,12 +1,12 @@
 {
-  "name": "tbc-payments",
+  "name": "node-tbc-payment-gateway",
   "version": "1.0.0",
   "description": "TBC credit card payments gateway",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "shota@mentesh.dev",
+  "author": "Shota Menteshashvili <shota@mentesh.dev> (https://mentesh.dev)",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.20.0"
