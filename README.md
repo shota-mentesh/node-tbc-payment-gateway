@@ -21,6 +21,7 @@ npm install --save node-tbc-payment-gateway
 - [Close Day](#close-day)
 - [Card Registration](#card-registration)
 - [Regular Payments](#regular-payments)
+- [Regular Payment Authorization](#regular-payment-authorization)
 
 ### Setup
 First, require the package in your file:
@@ -71,6 +72,7 @@ console.log(result);
 }
 */
 ```
+If transaction has been created with registered card, use `commitTransaction('TRANSACTION_ID_HERE', true)`.
 
 ### Transaction Status
 ```javascript
@@ -155,6 +157,7 @@ console.log(result);
 }
 */
 ```
+If you would like to make DMS transactions with registered cards, use `registerCard('CARD_ID', true)`.
 
 ### Regular Payments
 ```javascript
@@ -164,6 +167,27 @@ const result = await tbc
   .setDescription('Regular Payment Test')
   .setAmount(1)
   .makeRegularPayment('CARD_ID');
+
+console.log(result);
+/*
+{
+  TRANSACTION_ID: '...',
+  RESULT: '...',
+  RESULT_CODE: '...',
+  RRN: '...',
+  APPROVAL_CODE: '...',
+}
+*/
+```
+
+### Regular Payment Authorization
+```javascript
+const result = await tbc
+  .setCurrency(981)
+  .setClientIpAddress('127.0.0.1')
+  .setDescription('Regular Payment Test')
+  .setAmount(1)
+  .authorizeRegularPayment('CARD_ID');
 
 console.log(result);
 /*

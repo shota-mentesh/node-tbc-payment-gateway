@@ -1,6 +1,6 @@
 {
   "name": "node-tbc-payment-gateway",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "TBC credit card payments gateway",
   "main": "index.js",
   "scripts": {

@@ -101,7 +101,7 @@ class TBC {
     return this._request(payload);
   }
 
-  commitTransaction(transactionId) {
+  commitTransaction(transactionId, dms = false) {
     const payload = {
       'command'       : 't',
       'trans_id'      : transactionId,
@@ -112,10 +112,14 @@ class TBC {
       'language'      : this._language,
     }
 
+    if (dms) {
+      payload.template_type = 'DMS';
+    }
+
     return this._request(payload);
   }
 
-  registerCard(cardId) {
+  registerCard(cardId, dms = false) {
     const payload = {
       'command'            : 'p',
       'currency'           : this._currency,
@@ -126,6 +130,10 @@ class TBC {
       'perspayee_gen'      : 1,
       'perspayee_overwrite': 1,
       'msg_type'           : 'AUTH',
+    }
+
+    if (dms) {
+      payload.template_type = 'DMS';
     }
 
     return this._request(payload);
@@ -168,6 +176,20 @@ class TBC {
       'description'     : this._description,
       'biller_client_id': cardId,
     }
+
+    return this._request(payload);
+  }
+
+  authorizeRegularPayment(cardId) {
+    const payload = {
+      'command'         : 'f',
+      'amount'          : this._amount,
+      'currency'        : this._currency,
+      'client_ip_addr'  : this._clientIpAddress,
+      'description'     : this._description,
+      'template_type'   : 'DMS',
+      'biller_client_id': cardId,
+    };
 
     return this._request(payload);
   }
