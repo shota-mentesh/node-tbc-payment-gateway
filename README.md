@@ -1,17 +1,17 @@
-#TBC Payment Gateway for Node.js
+# TBC Payment Gateway for Node.js
 
 ## Table of Contents
 - [Installation](#installation)
 - [Usage](#usage)
 - [License](#license)
 
-##Installation
+## Installation
 Get started by installing the package:
 ```shell script
 npm install --save node-tbc-payment-gateway
 ```
 
-##Usage
+## Usage
 - [Setup](#setup)
 - [Create Transaction (SMS/DMS)](#create-transaction)
 - [Commit DMS Transaction](#commit-dms-transaction)
@@ -22,7 +22,7 @@ npm install --save node-tbc-payment-gateway
 - [Card Registration](#card-registration)
 - [Regular Payments](#regular-payments)
 
-###Setup
+### Setup
 First, require the package in your file:
 ```javascript
 const TBC = require('node-tbc-payment-gateway');
@@ -33,7 +33,7 @@ const tbc = new TBC('cert_file', 'cert_passphrase');
 ```
 You can now start working with the payment gateway.
 
-###Create Transaction
+### Create Transaction
 ```javascript
 const result = await tbc
   .setDescription('Test Transaction')
@@ -51,7 +51,7 @@ console.log(result);
 */
 ```
 
-###Commit DMS Transaction
+### Commit DMS Transaction
 ```javascript
 const result = await tbc
   .setDescription('Test Transaction')
@@ -72,7 +72,7 @@ console.log(result);
 */
 ```
 
-###Transaction Status
+### Transaction Status
 ```javascript
 const result = await tbc.getTransactionStatus('TRANSACTION_ID_HERE');
 
@@ -92,7 +92,7 @@ console.log(result);
 */
 ```
 
-###Reverse Transaction
+### Reverse Transaction
 ```javascript
 const result = await tbc.reverseTransaction('TRANSACTION_ID_HERE');
 
@@ -105,7 +105,7 @@ console.log(result);
 */
 ```
 
-###Refund Transaction
+### Refund Transaction
 ```javascript
 const result = await tbc.refundTransaction('TRANSACTION_ID_HERE');
 
@@ -119,7 +119,7 @@ console.log(result);
 */
 ```
 
-###Close Day
+### Close Day
 ```javascript
 const result = await tbc.closeDay();
 
@@ -140,7 +140,7 @@ console.log(result);
 */
 ```
 
-###Card Registration
+### Card Registration
 ```javascript
 const result = await tbc
   .setCurrency(981)
@@ -156,7 +156,7 @@ console.log(result);
 */
 ```
 
-###Regular Payments
+### Regular Payments
 ```javascript
 const result = await tbc
   .setCurrency(981)
