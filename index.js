@@ -1,6 +1,7 @@
 const https = require('https');
 const axios = require('axios');
 const fs    = require('fs');
+const _     = require('lodash');
 
 class TBC {
   _certFile = null;
@@ -50,7 +51,7 @@ class TBC {
       parsedResponse[keyValues[0]] = keyValues[1].trim();
     }
 
-    return parsedResponse;
+    return _.mapKeys(parsedResponse, (v, k) => _.camelCase(k));
   }
 
   setAmount(amount) {

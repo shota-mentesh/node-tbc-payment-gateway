@@ -1,6 +1,6 @@
 {
   "name": "node-tbc-payment-gateway",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "TBC credit card payments gateway",
   "main": "index.js",
   "scripts": {
@@ -9,7 +9,8 @@
   "author": "Shota Menteshashvili <shota@mentesh.dev> (https://mentesh.dev)",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.20.0"
+    "axios": "^0.20.0",
+    "lodash": "^4.17.20"
   },
   "keywords": [
     "tbc",
