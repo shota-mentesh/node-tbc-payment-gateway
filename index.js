@@ -15,10 +15,17 @@ class TBC {
   _clientIpAddress = '';
   _description     = '';
   _language        = 'GE';
+  _account         = null;
 
   constructor(cert, pass) {
     this._certFile = cert;
     this._certPass = pass;
+  }
+
+  get accounts() {
+    return {
+      ERTGULI: '80|0000'
+    };
   }
 
   _request(payload) {
@@ -28,9 +35,9 @@ class TBC {
 
     return axios.post(this._merchantHandlerEndpoint, query, {
       httpsAgent: new https.Agent({
-        cert              : fs.readFileSync(this._certFile),
-        key               : fs.readFileSync(this._certFile),
-        passphrase        : this._certPass,
+        cert: fs.readFileSync(this._certFile),
+        key: fs.readFileSync(this._certFile),
+        passphrase: this._certPass,
         rejectUnauthorized: false
       })
     })
@@ -79,23 +86,32 @@ class TBC {
     return this;
   }
 
+  setAccount(account) {
+    this._account = account;
+    return this;
+  }
+
   createTransaction(type = 'SMS') {
     const payload = {
-      'command'       : type === 'DMS' ? 'a' : 'v',
-      'amount'        : this._amount,
-      'currency'      : this._currency,
+      'command': type === 'DMS' ? 'a' : 'v',
+      'amount': this._amount,
+      'currency': this._currency,
       'client_ip_addr': this._clientIpAddress,
-      'description'   : this._description,
-      'language'      : this._language,
-      'msg_type'      : type,
+      'description': this._description,
+      'language': this._language,
+      'msg_type': type,
     };
+
+    if (this._account) {
+      payload.account = this._account;
+    }
 
     return this._request(payload);
   }
 
   getTransactionStatus(transactionId) {
     const payload = {
-      'command' : 'c',
+      'command': 'c',
       'trans_id': transactionId,
     };
 
@@ -104,17 +120,21 @@ class TBC {
 
   commitTransaction(transactionId, dms = false) {
     const payload = {
-      'command'       : 't',
-      'trans_id'      : transactionId,
-      'amount'        : this._amount,
-      'currency'      : this._currency,
+      'command': 't',
+      'trans_id': transactionId,
+      'amount': this._amount,
+      'currency': this._currency,
       'client_ip_addr': this._clientIpAddress,
-      'description'   : this._description,
-      'language'      : this._language,
+      'description': this._description,
+      'language': this._language,
     }
 
     if (dms) {
       payload.template_type = 'DMS';
+    }
+
+    if (this._account) {
+      payload.account = this._account;
     }
 
     return this._request(payload);
@@ -122,19 +142,23 @@ class TBC {
 
   registerCard(cardId, dms = false) {
     const payload = {
-      'command'            : 'p',
-      'currency'           : this._currency,
-      'client_ip_addr'     : this._clientIpAddress,
-      'description'        : this._description,
-      'biller_client_id'   : cardId,
-      'perspayee_expiry'   : '1299',
-      'perspayee_gen'      : 1,
+      'command': 'p',
+      'currency': this._currency,
+      'client_ip_addr': this._clientIpAddress,
+      'description': this._description,
+      'biller_client_id': cardId,
+      'perspayee_expiry': '1299',
+      'perspayee_gen': 1,
       'perspayee_overwrite': 1,
-      'msg_type'           : 'AUTH',
+      'msg_type': 'AUTH',
     }
 
     if (dms) {
       payload.template_type = 'DMS';
+    }
+
+    if (this._account) {
+      payload.account = this._account;
     }
 
     return this._request(payload);
@@ -142,9 +166,9 @@ class TBC {
 
   reverseTransaction(transactionId) {
     const payload = {
-      'command' : 'r',
+      'command': 'r',
       'trans_id': transactionId,
-      'amount'  : this._amount,
+      'amount': this._amount,
     }
 
     return this._request(payload);
@@ -152,9 +176,9 @@ class TBC {
 
   refundTransaction(transactionId) {
     const payload = {
-      'command' : 'k',
+      'command': 'k',
       'trans_id': transactionId,
-      'amount'  : this._amount,
+      'amount': this._amount,
     }
 
     return this._request(payload);
@@ -170,12 +194,16 @@ class TBC {
 
   makeRegularPayment(cardId) {
     const payload = {
-      'command'         : 'e',
-      'amount'          : this._amount,
-      'currency'        : this._currency,
-      'client_ip_addr'  : this._clientIpAddress,
-      'description'     : this._description,
+      'command': 'e',
+      'amount': this._amount,
+      'currency': this._currency,
+      'client_ip_addr': this._clientIpAddress,
+      'description': this._description,
       'biller_client_id': cardId,
+    }
+
+    if (this._account) {
+      payload.account = this._account;
     }
 
     return this._request(payload);
@@ -183,14 +211,18 @@ class TBC {
 
   authorizeRegularPayment(cardId) {
     const payload = {
-      'command'         : 'f',
-      'amount'          : this._amount,
-      'currency'        : this._currency,
-      'client_ip_addr'  : this._clientIpAddress,
-      'description'     : this._description,
-      'template_type'   : 'DMS',
+      'command': 'f',
+      'amount': this._amount,
+      'currency': this._currency,
+      'client_ip_addr': this._clientIpAddress,
+      'description': this._description,
+      'template_type': 'DMS',
       'biller_client_id': cardId,
     };
+
+    if (this._account) {
+      payload.account = this._account;
+    }
 
     return this._request(payload);
   }
