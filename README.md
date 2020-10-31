@@ -203,4 +203,4 @@ console.log(result);
 
 ## License
 
-[shota-mentesh/node-tbc-payment-gateway](https://github.com/shota-mentesh/node-tbc-payment-gateway) is licensed under a [ISC License](https://github.com/zgabievi/laravel-bogpayment/blob/master/LICENSE).
+[shota-mentesh/node-tbc-payment-gateway](https://github.com/shota-mentesh/node-tbc-payment-gateway) is licensed under a [ISC License](https://github.com/shota-mentesh/node-tbc-payment-gateway/blob/master/LICENSE).
